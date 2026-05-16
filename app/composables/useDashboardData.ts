@@ -69,8 +69,7 @@ export function useDashboardData() {
   const isStale = computed<boolean>(() => {
     if (!lastFetchedAt.value) return false;
     return (
-      Date.now() - lastFetchedAt.value.getTime() >
-      pollIntervalMs.value * 1.5
+      Date.now() - lastFetchedAt.value.getTime() > pollIntervalMs.value * 1.5
     );
   });
 

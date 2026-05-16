@@ -27,43 +27,81 @@ import { VIEW_IDS, type ViewId } from "#shared/viewIds";
 
 /** Coerce any unknown blob into a `DashboardConfig`, falling back to defaults. */
 function parseStored(raw: unknown): DashboardConfig {
-  const safe = (raw && typeof raw === "object" ? raw : {}) as Partial<DashboardConfig>;
+  const safe = (
+    raw && typeof raw === "object" ? raw : {}
+  ) as Partial<DashboardConfig>;
   const enabled = Array.isArray(safe.enabledViews)
     ? safe.enabledViews.filter((v): v is ViewId =>
-        (VIEW_IDS as readonly string[]).includes(v as string)
+        (VIEW_IDS as readonly string[]).includes(v as string),
       )
     : [...DEFAULTS.enabledViews];
 
   return {
-    pollIntervalMs: clampNum(safe.pollIntervalMs, DEFAULTS.pollIntervalMs, 30_000, 60 * 60_000),
-    viewRotationMs: clampNum(safe.viewRotationMs, DEFAULTS.viewRotationMs, 3_000, 10 * 60_000),
-    autoCycle: typeof safe.autoCycle === "boolean" ? safe.autoCycle : DEFAULTS.autoCycle,
+    pollIntervalMs: clampNum(
+      safe.pollIntervalMs,
+      DEFAULTS.pollIntervalMs,
+      30_000,
+      60 * 60_000,
+    ),
+    viewRotationMs: clampNum(
+      safe.viewRotationMs,
+      DEFAULTS.viewRotationMs,
+      3_000,
+      10 * 60_000,
+    ),
+    autoCycle:
+      typeof safe.autoCycle === "boolean" ? safe.autoCycle : DEFAULTS.autoCycle,
     enabledViews: enabled.length > 0 ? enabled : [...DEFAULTS.enabledViews],
-    mostImportantCount: clampNum(safe.mostImportantCount, DEFAULTS.mostImportantCount, 1, 20),
-    upcomingHorizonDays: clampNum(safe.upcomingHorizonDays, DEFAULTS.upcomingHorizonDays, 1, 90),
+    mostImportantCount: clampNum(
+      safe.mostImportantCount,
+      DEFAULTS.mostImportantCount,
+      1,
+      20,
+    ),
+    upcomingHorizonDays: clampNum(
+      safe.upcomingHorizonDays,
+      DEFAULTS.upcomingHorizonDays,
+      1,
+      90,
+    ),
   };
 }
 
-function clampNum(value: unknown, fallback: number, min: number, max: number): number {
-  const n = typeof value === "number" && Number.isFinite(value) ? value : fallback;
+function clampNum(
+  value: unknown,
+  fallback: number,
+  min: number,
+  max: number,
+): number {
+  const n =
+    typeof value === "number" && Number.isFinite(value) ? value : fallback;
   return Math.min(max, Math.max(min, n));
 }
 
 export function useDashboardConfig() {
   // Per-app singletons via `useState` — each consumer gets the same refs.
-  const pollIntervalMs = useState<number>("ldash:pollIntervalMs", () => DEFAULTS.pollIntervalMs);
-  const viewRotationMs = useState<number>("ldash:viewRotationMs", () => DEFAULTS.viewRotationMs);
-  const autoCycle = useState<boolean>("ldash:autoCycle", () => DEFAULTS.autoCycle);
+  const pollIntervalMs = useState<number>(
+    "ldash:pollIntervalMs",
+    () => DEFAULTS.pollIntervalMs,
+  );
+  const viewRotationMs = useState<number>(
+    "ldash:viewRotationMs",
+    () => DEFAULTS.viewRotationMs,
+  );
+  const autoCycle = useState<boolean>(
+    "ldash:autoCycle",
+    () => DEFAULTS.autoCycle,
+  );
   const enabledViews = useState<ViewId[]>("ldash:enabledViews", () => [
     ...DEFAULTS.enabledViews,
   ]);
   const mostImportantCount = useState<number>(
     "ldash:mostImportantCount",
-    () => DEFAULTS.mostImportantCount
+    () => DEFAULTS.mostImportantCount,
   );
   const upcomingHorizonDays = useState<number>(
     "ldash:upcomingHorizonDays",
-    () => DEFAULTS.upcomingHorizonDays
+    () => DEFAULTS.upcomingHorizonDays,
   );
 
   // Hydration + persistence must run exactly once per app lifecycle,
@@ -116,12 +154,15 @@ export function useDashboardConfig() {
             mostImportantCount: mostImportantCount.value,
             upcomingHorizonDays: upcomingHorizonDays.value,
           };
-          window.localStorage.setItem(DEFAULTS.storageKey, JSON.stringify(snapshot));
+          window.localStorage.setItem(
+            DEFAULTS.storageKey,
+            JSON.stringify(snapshot),
+          );
         } catch {
           // localStorage might be full or disabled — non-fatal.
         }
       },
-      { deep: true }
+      { deep: true },
     );
   });
 

@@ -289,7 +289,15 @@ function cycleOf(raw: RawCycle | null, teamId: string): DashboardCycle | null {
 
 // ─── Entry point ─────────────────────────────────────────────────────
 
-export async function getLivePayload(apiKey: string): Promise<DashboardPayload> {
+/**
+ * Build a `DashboardPayload` from a live Linear API key.
+ *
+ * Throws on auth / network failures so the API route can surface a
+ * meaningful 5xx to the client instead of silently returning mock data.
+ */
+export async function getLivePayload(
+  apiKey: string,
+): Promise<DashboardPayload> {
   const client = new LinearClient({ apiKey });
 
   // `client.client` is the underlying authenticated GraphQL client.

@@ -17,6 +17,8 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   enabled:
+    - actionlint@1.7.12
+    - yamllint@1.38.0
     - checkov@3.2.529
     - git-diff-check
     - grype@0.112.0

@@ -25,7 +25,8 @@ export default defineNuxtConfig({
         },
         {
           name: "description",
-          content: "Kiosk-style dashboard for your most important Linear issues.",
+          content:
+            "Kiosk-style dashboard for your most important Linear issues.",
         },
       ],
     },
