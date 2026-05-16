@@ -27,3 +27,15 @@ logs
 .wrangler
 .dev.vars*
 !.dev.vars.example
+
+# Skilld references (recreated by `skilld install`)
+.skilld
+
+# Skilld references (recreated by `skilld install`)
+.skilld
+
+# Skilld references (recreated by `skilld install`)
+.skilld
+
+# Skilld references (recreated by `skilld install`)
+.skilld

@@ -1,0 +1,81 @@
+skills:
+  vue-router-skilld:
+    packageName: vue-router
+    version: 5.0.7
+    packages: "vue-router@5.0.7"
+    repo: vuejs/router
+    source: "https://github.com/vuejs/router/tree/v5.0.7/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  vue-skilld:
+    packageName: vue
+    version: 3.5.34
+    packages: "vue@3.5.34"
+    repo: vuejs/core
+    source: "https://github.com/vuejs/core/tree/v3.5.34/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  nuxt-skilld:
+    packageName: nuxt
+    version: 4.4.5
+    packages: "nuxt@4.4.5"
+    repo: nuxt/nuxt
+    source: "https://nuxt.com/llms.txt"
+    syncedAt: 2026-05-16
+    generator: skilld
+  nitro-cloudflare-dev-skilld:
+    packageName: nitro-cloudflare-dev
+    version: 0.2.2
+    packages: "nitro-cloudflare-dev@0.2.2"
+    repo: pi0/nitro-cloudflare-dev
+    source: "ungh://pi0/nitro-cloudflare-dev"
+    syncedAt: 2026-05-16
+    generator: skilld
+  nitropack-skilld:
+    packageName: nitropack
+    version: 2.13.4
+    packages: "nitropack@2.13.4"
+    repo: nitrojs/nitro
+    source: "https://github.com/nitrojs/nitro/tree/v2.13.4/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  catppuccin-palette-skilld:
+    packageName: "@catppuccin/palette"
+    version: 1.8.0
+    packages: "@catppuccin/palette@1.8.0"
+    repo: catppuccin/palette
+    source: "https://github.com/catppuccin/palette/tree/v1.8.0/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  skilld-skilld:
+    packageName: skilld
+    version: 2.0.0
+    packages: "skilld@2.0.0"
+    repo: skilld-dev/skilld
+    source: "https://github.com/skilld-dev/skilld/tree/v2.0.0/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  wrangler-skilld:
+    packageName: wrangler
+    version: 4.92.0
+    packages: "wrangler@4.92.0"
+    repo: cloudflare/workers-sdk
+    source: "https://github.com/cloudflare/workers-sdk/tree/v4.92.0/docs"
+    syncedAt: 2026-05-16
+    generator: skilld
+  types-node-skilld:
+    packageName: "@types/node"
+    version: 25.8.0
+    packages: "@types/node@25.8.0"
+    repo: DefinitelyTyped/DefinitelyTyped
+    source: readme
+    syncedAt: 2026-05-16
+    generator: skilld
+  linear-sdk-skilld:
+    packageName: "@linear/sdk"
+    version: 84.0.0
+    packages: "@linear/sdk@84.0.0"
+    repo: linear/linear
+    source: "https://github.com/linear/linear/tree/@linear/sdk@84.0.0/docs"
+    syncedAt: 2026-05-16
+    generator: skilld

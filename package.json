@@ -9,7 +9,8 @@
     "preview": "bun run build && wrangler dev",
     "postinstall": "nuxt prepare",
     "deploy": "bun run build && wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "prepare": "skilld prepare || true"
   },
   "dependencies": {
     "@catppuccin/palette": "^1.8.0",
