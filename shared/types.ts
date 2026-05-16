@@ -14,7 +14,7 @@
  * makes the polling endpoint cheap to serialise.
  *
  * If you want a new field in the UI, add it here first, populate it in
- * `server/utils/shapeIssue.ts` (for live data) and `server/utils/mockData.ts`
+ * `server/utils/linear.ts` (for live data) and `server/utils/mockData.ts`
  * (for the demo dataset), then consume it from any component.
  */
 

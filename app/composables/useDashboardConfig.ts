@@ -66,9 +66,17 @@ export function useDashboardConfig() {
     () => DEFAULTS.upcomingHorizonDays
   );
 
-  /** Hydrate from localStorage, then start persisting changes. */
+  // Hydration + persistence must run exactly once per app lifecycle,
+  // even though this composable can be called from multiple components
+  // (each with its own `onMounted` hook). We track the one-shot flag
+  // with `useState` so the value is shared across every caller. The
+  // first mounted consumer wins; later consumers no-op.
+  const hydrated = useState<boolean>("ldash:configHydrated", () => false);
+
   onMounted(() => {
     if (!import.meta.client) return;
+    if (hydrated.value) return;
+    hydrated.value = true;
 
     try {
       const raw = window.localStorage.getItem(DEFAULTS.storageKey);
@@ -86,6 +94,9 @@ export function useDashboardConfig() {
     }
 
     // Persist whenever any setting changes. Deep watch covers the array.
+    // This watcher is attached to the *first* caller's scope; because
+    // `hydrated` is a per-app flag, subsequent callers skip this block,
+    // ensuring only one writer at a time.
     watch(
       [
         pollIntervalMs,
