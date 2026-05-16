@@ -1,0 +1,120 @@
+/*
+ * Tailwind v4 stylesheet for the Linear dashboard.
+ *
+ * Tailwind v4 is CSS-first: design tokens live inside a `@theme` block
+ * and become utility classes automatically. The naming convention is
+ * `--color-<token>` → `bg-<token>`, `text-<token>`, `border-<token>`,
+ * etc.
+ *
+ * We declare:
+ *   - The full Catppuccin Mocha palette as `--color-ctp-*` tokens.
+ *   - A single `--color-accent` token set to our lime green.
+ *
+ * To swap the accent colour, edit BOTH this file AND `LIME_ACCENT` in
+ * `app/config.ts`. The duplicate is intentional — one place is consumed
+ * by Tailwind at build time, the other by runtime TS/JS code that needs
+ * the value (e.g. inline styles).
+ *
+ * Catppuccin Mocha hex values are the canonical spec values from
+ * https://github.com/catppuccin/catppuccin and are also exposed
+ * programmatically by `@catppuccin/palette` (`flavors.mocha.colors`).
+ */
+
+@import "tailwindcss";
+
+@theme {
+  /* ─── Catppuccin Mocha — surfaces & text ─────────────────────────── */
+  --color-ctp-base: #1e1e2e;
+  --color-ctp-mantle: #181825;
+  --color-ctp-crust: #11111b;
+
+  --color-ctp-surface0: #313244;
+  --color-ctp-surface1: #45475a;
+  --color-ctp-surface2: #585b70;
+
+  --color-ctp-overlay0: #6c7086;
+  --color-ctp-overlay1: #7f849c;
+  --color-ctp-overlay2: #9399b2;
+
+  --color-ctp-subtext0: #a6adc8;
+  --color-ctp-subtext1: #bac2de;
+  --color-ctp-text: #cdd6f4;
+
+  /* ─── Catppuccin Mocha — accents ─────────────────────────────────── */
+  --color-ctp-rosewater: #f5e0dc;
+  --color-ctp-flamingo: #f2cdcd;
+  --color-ctp-pink: #f5c2e7;
+  --color-ctp-mauve: #cba6f7;
+  --color-ctp-red: #f38ba8;
+  --color-ctp-maroon: #eba0ac;
+  --color-ctp-peach: #fab387;
+  --color-ctp-yellow: #f9e2af;
+  --color-ctp-green: #a6e3a1;
+  --color-ctp-teal: #94e2d5;
+  --color-ctp-sky: #89dceb;
+  --color-ctp-sapphire: #74c7ec;
+  --color-ctp-blue: #89b4fa;
+  --color-ctp-lavender: #b4befe;
+
+  /* ─── Project accent ─────────────────────────────────────────────── */
+  /* Lime green. Keep in sync with `LIME_ACCENT` in app/config.ts. */
+  --color-accent: #cdff5a;
+  --color-accent-soft: #cdff5a33; /* 20% alpha lime, for subtle fills */
+
+  /* ─── Typography ─────────────────────────────────────────────────── */
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Monaco, Consolas,
+    monospace;
+}
+
+/*
+ * Base layer: page background, default text colour, body font.
+ * Everything else is utility classes inside components.
+ */
+@layer base {
+  html,
+  body {
+    background-color: var(--color-ctp-base);
+    color: var(--color-ctp-text);
+    font-family: var(--font-sans);
+    /* Snap text rendering for the kiosk use case. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+   * Hide the default scrollbar in the rotating view area. On a kiosk
+   * the bar is visual noise — we still allow overflow scrolling for
+   * developers viewing on a normal monitor.
+   */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/*
+ * Cross-fade + slide transition used by RotatingViewArea when the
+ * cycler advances. Tailwind doesn't ship Vue's transition classes,
+ * so they live here as raw CSS.
+ */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition:
+    opacity 350ms ease,
+    transform 350ms ease;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
