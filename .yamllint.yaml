@@ -1,0 +1,47 @@
+# yamllint config for ldash.
+#
+# Lives at the project root so yamllint discovers it automatically
+# (yamllint searches `$PWD/.yamllint`, `$PWD/.yamllint.yaml`,
+# `$PWD/.yamllint.yml`). Trunk also picks it up from here.
+#
+# We extend the default ruleset (which covers trailing-spaces,
+# new-line-at-end-of-file, indentation, etc.) and override a few rules
+# to play nicely with GitHub Actions workflow files.
+
+extends: default
+
+rules:
+  # Workflow files comfortably exceed yamllint's default 80-col limit;
+  # warn rather than fail.
+  line-length:
+    max: 200
+    level: warning
+
+  # Document-start markers (`---`) are noise in workflow files.
+  document-start: disable
+
+  # GitHub Actions step separators use blank lines; allow up to two.
+  empty-lines:
+    max: 2
+
+  # GitHub Actions uses `on:` as a key, which yamllint's default
+  # `truthy` rule mistakes for a YAML boolean. Whitelist it.
+  truthy:
+    allowed-values: ["true", "false", "on", "off"]
+    check-keys: false
+
+  # `actions: read  # comment` is common in workflow files; one space
+  # before the `#` is enough for legibility.
+  comments:
+    min-spaces-from-content: 1
+
+  # Don't *require* quoting (yamllint's `only-when-needed` clashes
+  # with our preference for human-readable URLs/IDs being explicitly
+  # quoted), but when quotes ARE used, prefer double quotes — matches
+  # the style enforced in `.github/workflows/`.
+  quoted-strings:
+    quote-type: double
+    required: false
+
+  octal-values:
+    forbid-implicit-octal: true
