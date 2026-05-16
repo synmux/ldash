@@ -38,21 +38,18 @@ function hoursAgo(hours: number): string {
 const viewer: DashboardUser = {
   id: "user-demo",
   name: "Demo User",
-  email: "demo@example.com",
   avatarUrl: null,
 };
 
 const otherUser: DashboardUser = {
   id: "user-2",
   name: "Riley Chen",
-  email: "riley@example.com",
   avatarUrl: null,
 };
 
 const thirdUser: DashboardUser = {
   id: "user-3",
   name: "Sam Park",
-  email: "sam@example.com",
   avatarUrl: null,
 };
 

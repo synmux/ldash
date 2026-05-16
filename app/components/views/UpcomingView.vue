@@ -17,14 +17,17 @@ const { upcomingHorizonDays } = useDashboardConfig();
 
 const issues = computed(() => {
   const all = data?.value?.issues ?? [];
+  // Anchor both `now` and each issue's due date to LOCAL midnight so
+  // the horizon matches the kiosk's wall clock. Linear's `dueDate` is
+  // a calendar date with no timezone; treat it as local.
   const now = new Date();
-  now.setUTCHours(0, 0, 0, 0);
+  now.setHours(0, 0, 0, 0);
   const horizonMs = upcomingHorizonDays.value * 24 * 60 * 60 * 1000;
   const cutoff = now.getTime() + horizonMs;
 
   const upcoming = all.filter((i) => {
     if (!i.dueDate) return false;
-    const t = Date.parse(`${i.dueDate}T00:00:00Z`);
+    const t = Date.parse(`${i.dueDate}T00:00:00`);
     return !Number.isNaN(t) && t <= cutoff;
   });
   return sortMostImportant(upcoming);

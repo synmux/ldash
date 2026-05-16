@@ -39,9 +39,13 @@ export function relativeTime(input: string | Date | null | undefined): string {
  */
 export function dueLabel(dueDate: string | null): string {
   if (!dueDate) return "";
-  const target = new Date(`${dueDate}T00:00:00Z`);
+  // Linear's `dueDate` is a calendar date (YYYY-MM-DD) with no
+  // timezone. Anchor both `target` and `today` to the kiosk's LOCAL
+  // midnight so "Today / Tomorrow" labels flip when the wall clock
+  // rolls over — not at UTC midnight.
+  const target = new Date(`${dueDate}T00:00:00`);
   const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
   const diffDays = Math.round(
     (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
   );
@@ -65,9 +69,11 @@ export type DueUrgency = "overdue" | "soon" | "week" | "later" | "far" | "none";
 
 export function dueUrgency(dueDate: string | null): DueUrgency {
   if (!dueDate) return "none";
-  const target = new Date(`${dueDate}T00:00:00Z`);
+  // Local-midnight comparison so urgency buckets transition with the
+  // kiosk's wall clock, not at 00:00 UTC. See `dueLabel` above.
+  const target = new Date(`${dueDate}T00:00:00`);
   const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
   const diffDays = Math.round(
     (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
   );

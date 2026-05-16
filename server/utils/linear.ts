@@ -49,12 +49,18 @@ import type {
 // the query complexity. 250 is well within Linear's per-request budget.
 const ISSUE_FETCH_LIMIT = 250;
 
+// Why the explicit `sort`:
+// `orderBy: updatedAt` would mean stale-but-critical issues with a
+// near due date get truncated out of large workspaces (Linear's
+// per-request cap is 250). Sorting by due date ascending (nulls last)
+// and priority ascending (no-priority last) guarantees the most
+// relevant items are inside the window. Mirrors the client-side
+// `sortMostImportant` rule.
 const DASHBOARD_QUERY = `
   query Dashboard($issueFirst: Int!) {
     viewer {
       id
       name
-      email
       avatarUrl
     }
     teams(first: 50) {
@@ -82,7 +88,10 @@ const DASHBOARD_QUERY = `
     issues(
       first: $issueFirst
       filter: { state: { type: { nin: ["completed", "canceled"] } } }
-      orderBy: updatedAt
+      sort: [
+        { dueDate: { order: asc, nulls: last } }
+        { priority: { order: asc, nulls: last } }
+      ]
     ) {
       nodes {
         id
@@ -101,13 +110,11 @@ const DASHBOARD_QUERY = `
         assignee {
           id
           name
-          email
           avatarUrl
         }
         creator {
           id
           name
-          email
           avatarUrl
         }
         project {
@@ -138,7 +145,6 @@ const DASHBOARD_QUERY = `
 interface RawUser {
   id: string;
   name: string;
-  email?: string | null;
   avatarUrl?: string | null;
 }
 
@@ -221,7 +227,6 @@ function userOf(u: RawUser | null): DashboardUser | null {
   return {
     id: u.id,
     name: u.name,
-    email: u.email ?? undefined,
     avatarUrl: u.avatarUrl ?? null,
   };
 }

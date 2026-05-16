@@ -54,12 +54,18 @@ export interface DashboardState {
   color: string;
 }
 
-/** A minimal user record, used for assignees, creators, and the viewer. */
+/**
+ * A minimal user record, used for assignees, creators, and the viewer.
+ *
+ * NOTE: deliberately does NOT include `email`. The dashboard never
+ * renders email addresses, and surfacing PII over the wire (especially
+ * for kiosk displays where the payload sits in browser memory) is
+ * unnecessary. If you need email later, add it back here AND in
+ * `server/utils/linear.ts` + `server/utils/mockData.ts`.
+ */
 export interface DashboardUser {
   id: string;
   name: string;
-  /** Optional email; we only surface it for the viewer in the header. */
-  email?: string;
   /** URL to an avatar image, if Linear has one for this user. */
   avatarUrl?: string | null;
 }
