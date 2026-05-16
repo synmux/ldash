@@ -1,0 +1,25 @@
+{
+	"name": "linear-dashboard",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "bun run build && wrangler dev",
+		"postinstall": "nuxt prepare",
+		"deploy": "bun run build && wrangler deploy",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"nuxt": "^4.4.5",
+		"vue": "^3.5.34",
+		"vue-router": "^5.0.6"
+	},
+	"devDependencies": {
+		"@types/node": "^25.8.0",
+		"nitro-cloudflare-dev": "^0.2.2",
+		"nitropack": "^2.13.4",
+		"wrangler": "^4.92.0"
+	}
+}
