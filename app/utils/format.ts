@@ -43,7 +43,7 @@ export function dueLabel(dueDate: string | null): string {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const diffDays = Math.round(
-    (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
+    (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
   );
   if (diffDays === 0) return "Today";
   if (diffDays === 1) return "Tomorrow";
@@ -69,7 +69,7 @@ export function dueUrgency(dueDate: string | null): DueUrgency {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const diffDays = Math.round(
-    (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000)
+    (target.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
   );
   if (diffDays < 0) return "overdue";
   if (diffDays <= 3) return "soon";

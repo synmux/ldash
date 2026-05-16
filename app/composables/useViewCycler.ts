@@ -33,7 +33,7 @@ export function useViewCycler() {
    * and off doesn't shuffle their rotation order.
    */
   const orderedEnabled = computed<ViewId[]>(() =>
-    VIEW_IDS.filter((id) => enabledViews.value.includes(id))
+    VIEW_IDS.filter((id) => enabledViews.value.includes(id)),
   );
 
   const currentView = computed<ViewId>(() => {
@@ -77,8 +77,7 @@ export function useViewCycler() {
   function prev(): void {
     const list = orderedEnabled.value;
     if (list.length === 0) return;
-    currentIndex.value =
-      (currentIndex.value - 1 + list.length) % list.length;
+    currentIndex.value = (currentIndex.value - 1 + list.length) % list.length;
     startDwell();
   }
 

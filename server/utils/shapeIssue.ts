@@ -95,12 +95,11 @@ export async function shapeIssue(issue: Issue): Promise<DashboardIssue> {
   // Linear sometimes returns issues without a creator (e.g. system-
   // created); in that case fall back to a placeholder so the type
   // contract holds.
-  const creatorShaped: DashboardUser =
-    userOf(creator) ?? {
-      id: "system",
-      name: "System",
-      avatarUrl: null,
-    };
+  const creatorShaped: DashboardUser = userOf(creator) ?? {
+    id: "system",
+    name: "System",
+    avatarUrl: null,
+  };
 
   const projectShaped: DashboardProject | null = project
     ? {

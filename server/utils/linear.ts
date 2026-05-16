@@ -27,7 +27,9 @@ import { shapeIssue } from "./shapeIssue";
  * Throws on auth / network failures so the API route can surface a
  * meaningful 5xx to the client instead of silently returning mock data.
  */
-export async function getLivePayload(apiKey: string): Promise<DashboardPayload> {
+export async function getLivePayload(
+  apiKey: string,
+): Promise<DashboardPayload> {
   const client = new LinearClient({ apiKey });
 
   // Kick off the four top-level queries in parallel.
@@ -94,14 +96,16 @@ export async function getLivePayload(apiKey: string): Promise<DashboardPayload> 
         teamId: team.id,
       };
       return shaped;
-    })
+    }),
   );
-  const activeCycles = cycleResults.filter((c): c is DashboardCycle => c !== null);
+  const activeCycles = cycleResults.filter(
+    (c): c is DashboardCycle => c !== null,
+  );
 
   // ── Issues ────────────────────────────────────────────────────────
   // Shape each issue (resolving its lazy relations) in parallel.
   const issues = await Promise.all(
-    issuesConnection.nodes.map((issue) => shapeIssue(issue))
+    issuesConnection.nodes.map((issue) => shapeIssue(issue)),
   );
 
   return {
