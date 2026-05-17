@@ -43,7 +43,8 @@ export type WorkflowStateType =
   | "started"
   | "completed"
   | "canceled"
-  | "triage";
+  | "triage"
+  | "duplicate";
 
 /** A workflow state as rendered on an issue card. */
 export interface DashboardState {
