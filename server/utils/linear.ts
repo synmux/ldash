@@ -89,8 +89,8 @@ const DASHBOARD_QUERY = `
       first: $issueFirst
       filter: { state: { type: { nin: ["completed", "canceled"] } } }
       sort: [
-        { dueDate: { order: asc, nulls: last } }
-        { priority: { order: asc, nulls: last } }
+        { dueDate: { order: Ascending, nulls: last } }
+        { priority: { order: Ascending, nulls: last } }
       ]
     ) {
       nodes {
