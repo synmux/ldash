@@ -78,7 +78,7 @@ const DASHBOARD_QUERY = `
         }
       }
     }
-    projects(first: 100, filter: { state: { eq: "started" } }) {
+    projects(first: 100, filter: { status: { type: { eq: "started" } } }) {
       nodes {
         id
         name
@@ -87,7 +87,9 @@ const DASHBOARD_QUERY = `
     }
     issues(
       first: $issueFirst
-      filter: { state: { type: { nin: ["completed", "canceled"] } } }
+      filter: {
+        state: { type: { nin: ["completed", "canceled", "duplicate"] } }
+      }
       sort: [
         { dueDate: { order: Ascending, nulls: last } }
         { priority: { order: Ascending, nulls: last } }
@@ -209,6 +211,7 @@ const STATE_TYPES: readonly WorkflowStateType[] = [
   "completed",
   "canceled",
   "triage",
+  "duplicate",
 ];
 
 function coerceStateType(raw: string | null | undefined): WorkflowStateType {
