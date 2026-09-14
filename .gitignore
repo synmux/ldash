@@ -30,12 +30,5 @@ logs
 
 # Skilld references (recreated by `skilld install`)
 .skilld
+.claude/skills/*-skilld/**
 
-# Skilld references (recreated by `skilld install`)
-.skilld
-
-# Skilld references (recreated by `skilld install`)
-.skilld
-
-# Skilld references (recreated by `skilld install`)
-.skilld
