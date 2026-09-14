@@ -25,11 +25,11 @@ Settings persist to `localStorage`.
 ## Quick start
 
 ```bash
-bun install
-bun run dev
+pnpm install
+pnpm run dev
 ```
 
-Open http://localhost:3000. With no Linear API key configured, the
+Open <http://localhost:3000>. With no Linear API key configured, the
 dashboard runs against a deterministic mock dataset (30 issues, 3 teams,
 4 projects, 2 active cycles) so you can see exactly how it looks before
 plugging in real data. The header shows a `MOCK` pill in this mode.
@@ -40,7 +40,7 @@ Get a personal API key from Linear's settings → API. Pass it via the
 `NUXT_LINEAR_API_KEY` env var:
 
 ```bash
-NUXT_LINEAR_API_KEY="lin_api_xxx" bun run dev
+NUXT_LINEAR_API_KEY="lin_api_xxx" pnpm run dev
 ```
 
 The header switches to a `LIVE` pill. The key stays on the server — it's
@@ -50,12 +50,12 @@ endpoint that proxies to Linear. The browser never sees it.
 ## Deploy to Cloudflare Workers
 
 ```bash
-bunx wrangler secret put NUXT_LINEAR_API_KEY  # one-time, stores the secret
-bun run deploy                                # build + wrangler deploy
+pnpm exec wrangler secret put NUXT_LINEAR_API_KEY  # one-time, stores the secret
+pnpm run deploy                                  # build + wrangler deploy
 ```
 
 The repo ships with `wrangler.jsonc` pre-configured (entry point, assets
-binding, `nodejs_compat`, observability). `bun run preview` runs a local
+binding, `nodejs_compat`, observability). `pnpm run preview` runs a local
 Cloudflare-style preview.
 
 ## Architecture in a paragraph
@@ -68,7 +68,7 @@ payload locally. Mock or live is a server-side decision based on
 `runtimeConfig.linearApiKey`; the wire format is identical either way,
 distinguished only by a `source: "mock" | "live"` field on the payload.
 
-```
+```plaintext
 ┌──────────────────┐  poll every 10 min   ┌────────────────────────────┐
 │ Browser          │ ───────────────────► │ Cloudflare Worker          │
 │ Vue components   │                      │ Nitro                      │
@@ -149,10 +149,10 @@ in TS/JS rather than as a Tailwind utility).
 
 ## Scripts
 
-| Command              | What it does                                  |
-| -------------------- | --------------------------------------------- |
-| `bun run dev`        | Nuxt dev server with Cloudflare emulation     |
-| `bun run build`      | Production Nuxt build for Cloudflare Workers  |
-| `bun run preview`    | Build then run local Cloudflare-style preview |
-| `bun run deploy`     | Build then deploy via Wrangler                |
-| `bun run cf-typegen` | Regenerate Cloudflare binding types           |
+| Command               | What it does                                  |
+| --------------------- | --------------------------------------------- |
+| `pnpm run dev`        | Nuxt dev server with Cloudflare emulation     |
+| `pnpm run build`      | Production Nuxt build for Cloudflare Workers  |
+| `pnpm run preview`    | Build then run local Cloudflare-style preview |
+| `pnpm run deploy`     | Build then deploy via Wrangler                |
+| `pnpm run cf-typegen` | Regenerate Cloudflare binding types           |

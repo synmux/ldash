@@ -44,10 +44,10 @@ export default defineNuxtConfig({
    *     `public`), the value is private — never sent to the browser.
    *
    * To run with a real key locally:
-   *   NUXT_LINEAR_API_KEY="lin_api_xxx" bun run dev
+   *   NUXT_LINEAR_API_KEY="lin_api_xxx" pnpm run dev
    *
    * To deploy with a real key on Cloudflare:
-   *   bunx wrangler secret put NUXT_LINEAR_API_KEY
+   *   pnpm exec wrangler secret put NUXT_LINEAR_API_KEY
    */
   runtimeConfig: {
     linearApiKey: "",
